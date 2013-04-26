@@ -4,16 +4,11 @@ require 'calendar.rb'
 class CalIntegrationTest < Test::Unit::TestCase
 
 
-def test_1_1
-  month = ARGV[0]
-  year = ARGV[1]
-
-puts `cal #{month} #{year}`
-
-end
-
-
-
+  def test_1_1
+    month = ARGV[0]
+    year = ARGV[1]
+    puts `cal #{month} #{year}`
+  end
 end
 
 
