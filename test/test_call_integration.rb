@@ -1,22 +1,17 @@
 require 'test/unit'
-require 'calendar.rb'
+
 
 class CalIntegrationTest < Test::Unit::TestCase
 
 
-  def test_1_1
-    month = ARGV[0]
-    year = ARGV[1]
-    puts `cal #{month} #{year}`
+  def test_1
+    assert_equal(`cal 2 2012`, `ruby calendar.rb 2 2012`)
   end
 end
 
 
-
-
-  # def test_01_print_month
-  #   month = "January"
-  #   assert_equal(month, 1)
+  # def test_02_return_month(0)
+  #   assert_equal(month, "January")
   # end
 
   # def test_01_print_year
