@@ -1,13 +1,11 @@
-require "initiate.rb"
-
 class Cal
   attr_reader :month, :year
   attr_accessor
 
 
   def initialize(month, year)
-    @month = month
-    @year = year
+    @month = month.to_i
+    @year = year.to_i
   end
 
 
@@ -127,3 +125,5 @@ class Cal
         days_collection.join("")
   end
 end
+
+
