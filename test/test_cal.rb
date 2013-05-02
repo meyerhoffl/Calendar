@@ -66,6 +66,53 @@ class CalTest < Test::Unit::TestCase
     cal = Cal.new(2, 2009)
     assert_equal(cal.return_month,"   February 2009\nSu Mo Tu We Th Fr Sa\n 1  2  3  4  5  6  7\n 8  9 10 11 12 13 14\n15 16 17 18 19 20 21\n22 23 24 25 26 27 28\n\n\n")
   end
+
+  def test_23_month_formatting_01
+    expected = <<EOS
+   February 2012
+Su Mo Tu We Th Fr Sa
+          1  2  3  4
+ 5  6  7  8  9 10 11
+12 13 14 15 16 17 18
+19 20 21 22 23 24 25
+26 27 28 29
+
+EOS
+    cal = Cal.new(2, 2012)
+    assert_equal(expected, cal.return_month)
+  end
+
+  def test_23_month_formatting_02
+    expected = <<EOS
+    August 3000
+Su Mo Tu We Th Fr Sa
+                1  2
+ 3  4  5  6  7  8  9
+10 11 12 13 14 15 16
+17 18 19 20 21 22 23
+24 25 26 27 28 29 30
+31
+EOS
+    cal = Cal.new(8, 3000)
+    assert_equal(expected, cal.return_month)
+  end
+
+  def test_23_month_formatting_03
+    expected = <<EOS
+     June 1800
+Su Mo Tu We Th Fr Sa
+ 1  2  3  4  5  6  7
+ 8  9 10 11 12 13 14
+15 16 17 18 19 20 21
+22 23 24 25 26 27 28
+29 30
+
+EOS
+cal = Cal.new(6, 1800)
+    assert_equal(expected, cal.return_month)
+  end
+
+
 end
 
 

@@ -1,11 +1,11 @@
 
-require "./lib/initiate"
+require "./initiate"
 
 class CalIntegrationTest < Test::Unit::TestCase
 
 
   def test_01_is_it_working
-    assert_equal(`cal 2 2013`, `ruby ./lib/initiate.rb 2 2013`)
+    assert_equal(`cal 2 2013`, `ruby ./initiate.rb 2 2013`)
   end
 
     def test_02_leap_year
@@ -48,5 +48,6 @@ class CalIntegrationTest < Test::Unit::TestCase
     assert_equal(cal.weeks_in_month, 4)
   end
 end
+
 
 
