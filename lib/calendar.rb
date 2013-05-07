@@ -1,6 +1,5 @@
 class Cal
   attr_reader :month, :year
-  attr_accessor
 
 
   def initialize(month, year)
@@ -9,12 +8,12 @@ class Cal
   end
 
 
-  def leap_year
-    if @year % 400 == 0
+  def leap_year?
+    if year % 400 == 0
       true
-    elsif @year % 100 == 0
+    elsif year % 100 == 0
       false
-    elsif @year % 4 == 0
+    elsif year % 4 == 0
       true
     else
       false
@@ -22,8 +21,10 @@ class Cal
   end
 
 
-  def zellers
-    # h =
+  def weekday_of_first
+    # This block of code uses Zeller's congruence to determine which day of the week the first falls on each month.
+    # The code returns 0 for Saturday, 1 for Sunday, 2 for Monday, etc.
+    # Visit http://en.wikipedia.org/wiki/Zeller's_congruence for more information on Zeller's congruence.
     # q = 1
     # m = @month
     # Y = @year
@@ -32,20 +33,18 @@ class Cal
     if @month == 1 || @month == 2
       @month += 12
       @year -= 1
-      h = (1 + ((@month + 1) * 26/10) + @year + @year/4 + 6 *(@year/100) + (@year/400)) % 7
-    else
-      h = (1 + ((@month + 1) * 26/10) + @year + @year/4 + 6 *(@year/100) + (@year/400)) % 7
     end
+      h = (1 + ((@month + 1) * 26/10) + @year + @year/4 + 6 *(@year/100) + (@year/400)) % 7
   end
 
 
   def weeks_in_month
     thirtyone = [1,3,5,7,8,10,12]
-    if zellers == 0 && @month != 2
+    if weekday_of_first == 0 && month != 2
       6
-    elsif zellers == 6 && thirtyone.include?(@month)
+    elsif weekday_of_first == 6 && thirtyone.include?(month)
       6
-    elsif zellers == 1 && leap_year
+    elsif weekday_of_first == 1 && leap_year?
         4
     else
       return 5
@@ -55,36 +54,39 @@ class Cal
 
   def get_header
     month_names = %w[January February March April May June July August September October November December]
-    x = month_names[@month.to_i-1]
-    string = "#{x} " + "#{@year}"
+    month_name = month_names[month.to_i-1]
+    string = "#{month_name} " + "#{year}"
     string.center(20).rstrip + "\n"
   end
 
+
   def get_week_days
-    days = %w[Su Mo Tu We Th Fr Sa]
-    days.join(" ") + "\n"
+    "Su Mo Tu We Th Fr Sa\n"
   end
 
 
   def number_of_days_in_month
     thirtyone = [1,3,5,7,8,10,12, 13]
     thirty = [9,4,6,11]
-    if thirtyone.include?(@month)
+    if thirtyone.include?(month)
       31
-    elsif thirty.include?(@month)
+    elsif thirty.include?(month)
       30
-    elsif leap_year == true
+    elsif leap_year? == true
       29
     else
       28
     end
   end
 
-  def modified_zellers
-    if zellers == 0
+
+  def reorder_week
+# This block of code modifies the weekday_of_first method to return 7 for Saturday instead of 0.
+# This adjustment simplifies the process of printing the first week of each month in the return_month method.
+    if weekday_of_first == 0
       7
     else
-      zellers
+      weekday_of_first
     end
   end
 
@@ -92,37 +94,33 @@ class Cal
   def return_month
 
     days = [" 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
-    days_collection = []
-    z = 1
-    shifting = 7
+    formatted_month = []
+    day_selection = 7
 
-    days_collection << get_header
-    days_collection << get_week_days
+    formatted_month << get_header
+    formatted_month << get_week_days
 
-      if number_of_days_in_month == 30
-        days = days.shift(30)
-      elsif number_of_days_in_month == 28
-        days = days.shift(28)
-      elsif number_of_days_in_month == 29
-        days = days.shift(29)
+    days = days.shift(number_of_days_in_month)
+
+    week_length = 8
+    first_of_month = 1
+
+    while first_of_month < week_length
+      if reorder_week == first_of_month
+        week1 = days.shift(day_selection)
+        week1 = week1.join(" ").rjust(20) + "\n"
       end
+      first_of_month += 1
+      day_selection -= 1
+    end
+      formatted_month << week1
 
-      while z < 8
-        if modified_zellers == z
-          week1 = days.shift(shifting)
-          weekone = week1.join(" ").rjust(20) + "\n"
-        end
-        z += 1
-        shifting -= 1
-      end
-      days_collection << weekone
-
-        5.times do
-          week = days.shift(7)
-          regweek = week.join(" ") + "\n"
-          days_collection << regweek
-        end
-        days_collection.join("")
+    5.times do
+      week = days.shift(7)
+      regweek = week.join(" ") + "\n"
+      formatted_month << regweek
+    end
+      formatted_month.join("")
   end
 end
 
