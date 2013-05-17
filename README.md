@@ -1,15 +1,8 @@
-This is a Ruby project for the Nashville Software School. The end goal is to print a calendar.
+This is a Ruby project for the Nashville Software School.
+The assignment was to write a program in Ruby that mimics the Unix program, Cal.
 
-Currently, my program is returning months that match the unix Cal program months. The list of cases that I am testing
-for include:
+Currently, my program is printing individual months and full years that are identical to Cal.
 
-
-Returning a header with the month and year
-
-Returning a header with the week days
-
-Returning the number of days in a month
-
-Modifying Zellers congruence so that Saturday = 7 instead of 0
-
-Returning a formatted month with the header with the month and year and the week days
+Future goals for this project:
+Refactor code to achieve greater efficiency and readability.
+Enable program to take command line arguments properly for a single month or full year.
