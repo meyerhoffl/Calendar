@@ -8,4 +8,3 @@ Currently, my program is printing individual months and full years that are iden
 
 Future goals for this project:
 Refactor code to achieve greater efficiency and readability.
-Enable program to take command line arguments properly for a single month or full year.
